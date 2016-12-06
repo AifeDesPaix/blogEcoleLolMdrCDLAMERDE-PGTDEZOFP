@@ -1,6 +1,6 @@
 <?php
 $articles = Article::getAll();
-var_dump($articles);
+
 if(!empty($articles)) {
   $htmlArticles = '';
   /** @var Article $article */

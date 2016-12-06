@@ -11,5 +11,5 @@ $article->setImage(empty($_GET['image']) ? $_GET['image'] : '');
 
 $article->save();
 
-
+header('Location: index.php');
 
