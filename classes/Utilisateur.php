@@ -88,7 +88,7 @@ class Utilisateur extends Classe
     if(!$res = SPDO::getInstance()->query($user)) {
       throw new Exception("Mot de passe incorrect");
     }
-
+var_dump($res);
     if($data = $res->fetch()) {
       $this->remplirViaArray($data);
       $this->setIsLoaded(true);

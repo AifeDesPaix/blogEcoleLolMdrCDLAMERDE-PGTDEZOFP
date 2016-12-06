@@ -7,17 +7,33 @@ header {
 body, html {
     margin: 0;
     padding: 0;
+}
 
+#content {
+    padding: 30px;
+    display: flex;
+    width: 100%;
+}
+
+#menu {
+    width: 20%;
+    margin: 0;
+}
+
+#page {
+    width: 80%;
+    margin: 0;
 }
 
 #formConnexion {
-    width: 75%;
-    display: block;
-    text-align: center;
-    margin: auto;
+    width: 400px;
 }
 
-#formConnexion input {
-    width: 30%;
+#formulairesCoInscr {
+    display: flex;
+    flex-direction: row;
+}
+
+#formulairesCoInscr input {
     padding: 10px;
 }

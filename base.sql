@@ -3,8 +3,8 @@ CREATE TABLE Utilisateur
 (
   id_user int AUTO_INCREMENT PRIMARY KEY,
   nom varchar(30) UNIQUE NOT NULL,
-  mdp varchar(50) UNIQUE NOT NULL,
-  mail varchar(50) UNIQUE NOT NULL
+  mdp varchar(50) NOT NULL,
+  mail varchar(50)
 );
 
 INSERT INTO Utilisateur (nom, mdp, mail) VALUES ('connard', 'd944c282ee6ed52067cf17d37131942c', 'connard@connard.con');
@@ -20,7 +20,6 @@ CREATE TABLE Article
   titre varchar(50) NOT NULL,
   texte varchar(600) NOT NULL,
   image varchar(120),
+  visible BOOLEAN DEFAULT TRUE,
   FOREIGN KEY (id_user) REFERENCES Utilisateur(id_user)
 );
-
-INSERT INTO Article (id_user, titre, texte, image) VALUES (1, 'lol', 'mdr');

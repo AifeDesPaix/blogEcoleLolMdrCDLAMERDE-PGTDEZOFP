@@ -1,17 +1,26 @@
 <?php
 
 class Article extends Classe {
+  /** @var int */
   protected $id_article;
+  /** @var int */
+  protected $id_user;
+  /** @var String */
   protected $titre;
+  /** @var String */
   protected $texte;
+  /** @var String */
   protected $image;
+  /** @var Date */
   protected $dateCreation;
+  /** @var boolean */
+  protected $visible;
 
   /**
    * Article constructor.
    */
   public function __construct() {
-    parent::__construct('Article', 'id_article', array('titre', 'texte', 'image'));
+    parent::__construct('Article', 'id_article', array('titre', 'id_user', 'texte', 'image'));
   }
 
   /**
@@ -93,5 +102,46 @@ class Article extends Classe {
   {
     $this->dateCreation = $dateCreation;
   }
+
+  /**
+   * @return int
+   */
+  public function getIdUser()
+  {
+    return $this->id_user;
+  }
+
+  /**
+   * @param int $id_user
+   */
+  public function setIdUser($id_user)
+  {
+    $this->id_user = $id_user;
+  }
+
+  /**
+   * @return boolean
+   */
+  public function isVisible()
+  {
+    return $this->visible;
+  }
+
+  /**
+   * @param boolean $visible
+   */
+  public function setVisible($visible)
+  {
+    $this->visible = $visible;
+  }
+
+  static public function getAll($limit = 10, $where = '') {
+    if(!empty($where)) {
+      $where .= ' AND ';
+    }
+    $where .= 'visible = true';
+    return parent::getAll($limit, $where);
+  }
+
 
 }

@@ -15,7 +15,7 @@ if(isset($_GET['action'])) {
   include ('traitement/'.$_GET['action'].".php");
 }
 
-$page = isset($_GET['page']) ? $_GET['page']: "accueil";
+if(empty($page)) $page = isset($_GET['page']) ? $_GET['page']: "accueil";
 ?>
 
 <!doctype html>
@@ -24,9 +24,16 @@ $page = isset($_GET['page']) ? $_GET['page']: "accueil";
 <body>
 
 <?php include_once ("page/header.php"); ?>
-
 <div id="content">
-  <?php include('pages/'.$page.'.php') ?>
+
+  <nav id="menu">
+    <?php include_once ("page/menu.php"); ?>
+  </nav>
+
+  <div id="page">
+    <?php include('pages/'.$page.'.php') ?>
+  </div>
+
 </div>
 
 <?php include_once ("page/footer.php"); ?>

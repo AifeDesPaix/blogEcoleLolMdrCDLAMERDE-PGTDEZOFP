@@ -39,7 +39,8 @@ class Classe {
 
 
   public function loadByPK($pk) {
-    $user = "SELECT * FROM ".$this->className." WHERE ".$this->pk." = '".$pk."'";
+
+    $user = "SELECT ".implode(', ', $this->cols)." FROM ".$this->className." WHERE ".$this->pk." = '".$pk."'";
 
     if(!$res = SPDO::getInstance()->query($user)) {
       throw new Exception("Mot de passe incorrect");
@@ -64,7 +65,7 @@ class Classe {
   }
 
   public function save() {
-    $this->isLoaded ? $this->update() : $this->insert();
+    return $this->isLoaded ? $this->update() : $this->insert();
   }
 
   private function insert() {
@@ -86,13 +87,12 @@ class Classe {
     $req = substr($req, 0, -2);
     $req .= ')';
 
-    if(SPDO::getInstance()->query($req)) {
-      echo "reussi";
-    }
+    return SPDO::getInstance()->query($req);
   }
 
   private function update() {
-
+    // todo
+    throw new Exception('Update détécté à TODO');
   }
 
   /**
@@ -106,25 +106,49 @@ class Classe {
   /**
    * @param mixed $isLoaded
    */
-  public function setIsLoaded($isLoaded)
+  protected function setIsLoaded($isLoaded)
   {
     $this->isLoaded = $isLoaded;
   }
 
-  static public function getAll($limit = 10) {
+  static public function getAll($limit = 10, $where = '') {
     $objets = [];
-    $req = 'SELECT * FROM '.get_called_class().' LIMIT '.$limit;
+    $req = 'SELECT * FROM '.get_called_class().' ';
+
+    if(!empty($where)) {
+      $req .= 'WHERE '.$where.' ';
+    }
+    $req .= ' LIMIT '.$limit.' ';
+
+    var_dump($req);
     $res = SPDO::getInstance()->query($req);
 
-    while ($val = $res->fetch()) {
-      $classe = get_called_class();
-      /** @var Classe $unite */
-      $unite = new $classe();
-      $unite->setIsLoaded( $unite->remplirViaArray($val) );
-      $objets[] = $unite;
+    if(!$res) {
+      throw new Exception("Requete Echoue");
+    }
+    try {
+      while ($val = $res->fetch()) {
+        $classe = get_called_class();
+        /** @var Classe $unite */
+        $unite = new $classe();
+        $unite->setIsLoaded( $unite->remplirViaArray($val) );
+        $objets[] = $unite;
+      }
+    } catch (Exception $e) {
+
     }
 
     return $objets;
+  }
+
+  public function delete() {
+    var_dump(get_called_class());
+    $pk = $this->pk;
+    var_dump($pk);
+    var_dump($this);
+//    $req = 'DELETE FROM '.get_called_class().' WHERE '.$this->pk.' = '.$this->($this->pk);
+//    var_dump($req);
+//    SPDO::getInstance()->query($req);
   }
 
 }
